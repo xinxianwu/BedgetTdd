@@ -57,6 +57,21 @@ public class Tests
         BudgetShouldBe(budget, 17);
     }
 
+    [Test]
+    public void QueryCrossYears()
+    {
+        GivenBudgets(new List<BudgetDateModel>
+        {
+            new() { YearMonth = "202310", Amount = 31 },
+            new() { YearMonth = "202311", Amount = 30 },
+            new() { YearMonth = "202312", Amount = 31 },
+            new() { YearMonth = "202401", Amount = 31 }
+        });
+        var budget = _budgetService.Query(new DateTime(2023, 10, 01), new DateTime(2024, 01, 31));
+
+        BudgetShouldBe(budget, 123);
+    }
+
     private static void BudgetShouldBe(decimal budget, int expected)
     {
         budget.Should().Be(expected);
