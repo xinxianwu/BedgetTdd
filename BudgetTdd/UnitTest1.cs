@@ -1,3 +1,6 @@
+using BudgetTdd.Services;
+using FluentAssertions;
+
 namespace BudgetTdd;
 
 public class Tests
@@ -8,8 +11,11 @@ public class Tests
     }
 
     [Test]
-    public void Test1()
+    public void QueryMonthly()
     {
-        Assert.Pass();
+        var budgetService = new BudgetService();
+        var budget = budgetService.Query(new DateTime(2023, 11, 01), new DateTime(2023, 11, 30));
+
+        budget.Should().Be(30);
     }
 }
