@@ -26,9 +26,9 @@ public class Tests
             new() { YearMonth = "202310", Amount = 31 },
             new() { YearMonth = "202311", Amount = 90 }
         });
-        var budget = _budgetService.Query(new DateTime(2023, 11, 01), new DateTime(2023, 11, 30));
+        var budget = _budgetService.Query(new DateTime(2023, 11, 05), new DateTime(2023, 11, 25));
 
-        BudgetShouldBe(budget, 90);
+        BudgetShouldBe(budget, 63);
     }
 
     [Test]
