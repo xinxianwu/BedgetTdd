@@ -13,6 +13,15 @@ public class BudgetService
 
     public decimal Query(DateTime start, DateTime end)
     {
-        return _budgetRepo.GetAll().Sum(x => x.Amount);
+        return _budgetRepo.GetAll()
+            .Where(x =>
+            {
+                var budgetYearMonth = new YearMonth(x.YearMonth);
+                var startYearMonth = new YearMonth(start.ToString("yyyyMM"));
+                var endYearMonth = new YearMonth(end.ToString("yyyyMM"));
+
+                return budgetYearMonth >= startYearMonth && budgetYearMonth <= endYearMonth;
+            })
+            .Sum(x => x.Amount);
     }
 }
