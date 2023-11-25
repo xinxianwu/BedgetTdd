@@ -44,6 +44,19 @@ public class Tests
         BudgetShouldBe(budget, 7);
     }
 
+    [Test]
+    public void QueryBudgetAndOneMonthNotFound()
+    {
+        GivenBudgets(new List<BudgetDateModel>
+        {
+            new() { YearMonth = "202309", Amount = 30 },
+            new() { YearMonth = "202311", Amount = 90 }
+        });
+        var budget = _budgetService.Query(new DateTime(2023, 09, 29), new DateTime(2023, 11, 5));
+
+        BudgetShouldBe(budget, 17);
+    }
+
     private static void BudgetShouldBe(decimal budget, int expected)
     {
         budget.Should().Be(expected);
