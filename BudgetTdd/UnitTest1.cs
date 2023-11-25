@@ -86,6 +86,18 @@ public class Tests
         BudgetShouldBe(budget, 91);
     }
 
+    [Test]
+    public void InvalidDateRange()
+    {
+        GivenBudgets(new List<BudgetDateModel>
+        {
+            new() { YearMonth = "202312", Amount = 31 }
+        });
+        var budget = _budgetService.Query(new DateTime(2024, 03, 01), new DateTime(2023, 10, 01));
+
+        BudgetShouldBe(budget, 0);
+    }
+
     private static void BudgetShouldBe(decimal budget, int expected)
     {
         budget.Should().Be(expected);
