@@ -47,6 +47,12 @@ public class DateRange
         _month = month;
     }
 
+    public DateRange(string yearMonthString)
+    {
+        _year = int.Parse(yearMonthString[..4]);
+        _month= int.Parse(yearMonthString[4..]);
+    }
+
     public int CalculateOverlayDays(DateTime start2, DateTime end2)
     {
         var rangeStart = new DateTime(_year, _month, 1);

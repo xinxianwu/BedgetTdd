@@ -23,12 +23,25 @@ public class Tests
     {
         GivenBudgets(new List<BudgetDateModel>
         {
-            new() { YearMonth = "202310", Amount = 30 },
-            new() { YearMonth = "202311", Amount = 40 }
+            new() { YearMonth = "202310", Amount = 31 },
+            new() { YearMonth = "202311", Amount = 90 }
         });
         var budget = _budgetService.Query(new DateTime(2023, 11, 01), new DateTime(2023, 11, 30));
 
-        BudgetShouldBe(budget, 40);
+        BudgetShouldBe(budget, 90);
+    }
+
+    [Test]
+    public void QueryDaily()
+    {
+        GivenBudgets(new List<BudgetDateModel>
+        {
+            new() { YearMonth = "202310", Amount = 31 },
+            new() { YearMonth = "202311", Amount = 60 }
+        });
+        var budget = _budgetService.Query(new DateTime(2023, 10, 29), new DateTime(2023, 11, 02));
+
+        BudgetShouldBe(budget, 7);
     }
 
     private static void BudgetShouldBe(decimal budget, int expected)

@@ -22,6 +22,12 @@ public class BudgetService
 
                 return budgetYearMonth >= startYearMonth && budgetYearMonth <= endYearMonth;
             })
-            .Sum(x => x.Amount);
+            .Sum(x =>
+            {
+                var intervalDays = new DateRange(x.YearMonth).CalculateOverlayDays(start, end);
+                var currentMonthDays = DateTime.DaysInMonth(int.Parse(x.YearMonth[..4]), int.Parse(x.YearMonth[4..]));
+
+                return x.Amount / currentMonthDays * intervalDays;
+            });
     }
 }
