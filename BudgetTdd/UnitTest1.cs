@@ -23,11 +23,12 @@ public class Tests
     {
         GivenBudgets(new List<BudgetDateModel>
         {
-            new() { Amount = 30 }
+            new() { YearMonth = "202310", Amount = 30 },
+            new() { YearMonth = "202311", Amount = 40 }
         });
         var budget = _budgetService.Query(new DateTime(2023, 11, 01), new DateTime(2023, 11, 30));
 
-        BudgetShouldBe(budget, 30);
+        BudgetShouldBe(budget, 40);
     }
 
     private static void BudgetShouldBe(decimal budget, int expected)
